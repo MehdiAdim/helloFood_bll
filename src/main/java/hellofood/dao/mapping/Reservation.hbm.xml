@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 6, 2017 8:42:17 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="hellofood.bo.Reservation" table="RESERVATION">
+        <id name="idReservation" type="java.lang.Long">
+            <column name="IDRESERVATION" />
+            <generator class="increment" />
+        </id>
+        <property name="startReservation" type="java.util.Date">
+            <column name="STARTRESERVATION" />
+        </property>
+        <property name="endReservation" type="java.util.Date">
+            <column name="ENDRESERVATION" />
+        </property>
+        <property name="notExpired" type="boolean">
+            <column name="notExpired" />
+        </property>
+        <many-to-one name="table" class="hellofood.bo.Table" fetch="join">
+            <column name="TABLE_RESER" />
+        </many-to-one>
+        <many-to-one name="restaurant" class="hellofood.bo.Restaurant" fetch="join">
+            <column name="RESTAURANT" />
+        </many-to-one>
+        <many-to-one name="user" class="hellofood.bo.security.Utilisateur" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

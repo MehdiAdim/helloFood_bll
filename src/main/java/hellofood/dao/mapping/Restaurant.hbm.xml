@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 6, 2017 8:42:17 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="hellofood.bo.Restaurant" table="RESTAURANT">
+		<id name="idRestaurant" type="java.lang.Long">
+			<column name="IDRESTAURANT" />
+			<generator class="increment" />
+		</id>
+		<property name="nomRestaurant" type="java.lang.String">
+			<column name="NOMRESTAURANT" />
+		</property>
+		<property name="adresseRestaurant" type="java.lang.String">
+			<column name="ADRESSERESTAURANT" />
+		</property>
+		<set name="reservations" cascade="all">
+			<key column="RESTAURANT" />
+			<one-to-many class="hellofood.bo.Reservation" />
+		</set>
+		<set name="tables" cascade="all">
+			<key column="RESTAURANT" />
+			<one-to-many class="hellofood.bo.Table" />
+		</set>
+	</class>
+</hibernate-mapping>
