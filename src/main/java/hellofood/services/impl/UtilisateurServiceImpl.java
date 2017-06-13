@@ -28,6 +28,7 @@ import hellofood.dao.interfaces.UtilisateurDao;
 import hellofood.exceptions.DuplicateLoginException;
 import hellofood.services.ReservationService;
 import hellofood.services.UtilisateurService;
+import hellofood.tools.LoggerTools;
 
 public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsService {
 	
@@ -36,6 +37,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 	private UtilisateurDao userDao;
 	private RoleDao roleDao;
 	private ReservationService reservationService;
+	private LoggerTools loggerTools;
 	
 	
 	
@@ -44,6 +46,14 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 	
 
 	
+	public LoggerTools getLoggerTools() {
+		return loggerTools;
+	}
+
+	public void setLoggerTools(LoggerTools loggerTools) {
+		this.loggerTools = loggerTools;
+	}
+
 	public Utilisateur getPrincipal(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -76,16 +86,14 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		try {
 			lUser = userDao.getUserByLogin(pLogin);
 			
-			reservationService.updateReservationDate();
+			
 			
 
 		} catch (ObjectRetrievalFailureException ex) {
 			ex.printStackTrace();
-
-			// nous relançons une UsernameNotFoundException si aucun utilisateur
-			// ne correspond à cet login
-			log.debug("Erreur d'authentification avec le login : " + pLogin);
-			System.out.println("not found on database");
+			
+			loggerTools.addBox(log, "FAILED AUTHENTIFICATION");
+			
 			throw new UsernameNotFoundException("User " + pLogin + " not exists", ex);
 			
 
@@ -96,6 +104,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		// pour mettre à jour sa date de dernière connexion
 		lUser.setLastAccessDate(Calendar.getInstance().getTime());
 		userDao.update(lUser);
+		
 		// Il faut ensuite récupérer les rôles de l’utilisateur et les
 		// mettre
 		// sous la forme de SimpleGrantedAuthority, une interface propre à
@@ -204,6 +213,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		this.reservationService = reservationService;
 	}
 
+	
     
 	
 

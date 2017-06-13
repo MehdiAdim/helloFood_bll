@@ -9,8 +9,7 @@ import hellofood.exceptions.DuplicateLoginException;
 /**
  * 
  *  Service interface for Utilisateur
- * 
- * @author mehdi
+ *
  *
  */
 

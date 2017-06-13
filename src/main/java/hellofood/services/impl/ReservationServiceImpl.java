@@ -1,5 +1,6 @@
 package hellofood.services.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,8 +8,8 @@ import com.boudaa.dao.exceptions.EntityNotFoundException;
 
 import hellofood.bo.Reservation;
 import hellofood.dao.interfaces.ReservationDao;
-import hellofood.services.DateService;
 import hellofood.services.ReservationService;
+import hellofood.tools.DateTools;
 
 /**
  * 
@@ -23,23 +24,20 @@ public class ReservationServiceImpl implements ReservationService {
 
 	private ReservationDao reservationDao;
 	
-	private DateService dateService;
+	private DateTools dateTools;
 
+	// ----------------------
 
 	
+	//  Getters and Setters
 
-	public DateService getDateService() {
-		return dateService;
+	public DateTools getDateTools() {
+		return dateTools;
 	}
 
 
-	public void setDateService(DateService dateService) {
-		this.dateService = dateService;
-	}
-
-
-	public ReservationServiceImpl(){
-
+	public void setDateTools(DateTools dateTools) {
+		this.dateTools = dateTools;
 	}
 
 
@@ -55,6 +53,10 @@ public class ReservationServiceImpl implements ReservationService {
 
 		return reservationDao.getAll();
 	}
+	
+	// -------------------
+	
+	// business logic methods implementation
 
 	public List<Reservation> findReservationByTitle(String pTitle) {
 
@@ -66,10 +68,6 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationDao.findById(idReservation);
 
 	}
-
-
-
-
 
 
 	public void deleteReservation(Long pId) throws EntityNotFoundException {
@@ -118,7 +116,14 @@ public class ReservationServiceImpl implements ReservationService {
 			
 			for(int i=0;i<list.size();i++){
 				
-				System.out.println(list.get(i).getEndReservation());
+				if(list.get(i).getEndReservation().before(new Date())){
+					
+					list.get(i).setNotExpired(false);
+					
+					reservationDao.update(list.get(i));
+					System.out.println("mise a jour de la date");
+					
+				}
 				
 			}
 			
