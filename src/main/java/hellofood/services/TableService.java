@@ -11,7 +11,7 @@ import com.boudaa.dao.exceptions.EntityNotFoundException;
  * 
  *  Service interface for Table
  * 
- * @author mehdi
+ * 
  *
  */
 public interface TableService {
@@ -22,9 +22,8 @@ public interface TableService {
 
 	public Map<String, Number> getTablesStat();
 
-	public List<Table> finTableByTitle(String pTitle);
 
-	public Table finTableById(Long idTable) throws EntityNotFoundException;
+	public Table findTableById(Long idTable) throws EntityNotFoundException;
 
 	public void updateTable(Table pTable) ;
 

@@ -77,15 +77,24 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 	
 	public UserDetails loadUserByUsername(String pLogin) throws UsernameNotFoundException {
 		
-		System.out.println("loadUserByUsername");
+		loggerTools.addBox(log, "loadUserByUSername");
 		
 		Utilisateur lUser = null;
 		Collection<GrantedAuthority> arrayAuths = new ArrayList<GrantedAuthority>();
 
 		// On récupère un objet de domaine de type User ayant comme login pLogin
 		try {
+			
 			lUser = userDao.getUserByLogin(pLogin);
 			
+			loggerTools.addBox(log, "SUCCES AUTHENTIFICATION");
+			
+			
+			// update reservation with real time
+			
+			reservationService.updateReservationDate();
+			
+			//--------------------------------------
 			
 			
 
@@ -100,22 +109,19 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		}
 	
 
-		// Si un utilisateur correspond à cet identifiant, nous en profitons
-		// pour mettre à jour sa date de dernière connexion
+		// KNOWN USER & update his last access date
+		
 		lUser.setLastAccessDate(Calendar.getInstance().getTime());
 		userDao.update(lUser);
 		
-		// Il faut ensuite récupérer les rôles de l’utilisateur et les
-		// mettre
-		// sous la forme de SimpleGrantedAuthority, une interface propre à
-		// Spring
-		// Security*
+		
+		// our roles to SimpleGrantedAuthority, Spring security interface
+		
 		Role role = lUser.getRole();
-		System.out.println(role.getRoleName());
-		System.out.println(lUser.getPassword());
 		arrayAuths.add(new SimpleGrantedAuthority(role.getRoleName()));
-		// /un User (classe Spring Security) est créé
-		System.out.println("oui");
+		
+		// Return Spring security user
+
 		return new User(pLogin, lUser.getPassword(), lUser.isEnabled(), lUser.isAccountNotExpired(), true,
 				lUser.isAccountNotLocked(), arrayAuths);
 	}
@@ -133,9 +139,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		}
 
 		if (users.size() != 1) {
-			// TODO : Ecrire le code pour ajouter des log fatal
-			// TODO : ecrire le code envoyant un mail d'erreur fatal à
-			// l'administrateur
+			
 
 			throw new RuntimeException("Erreur inconnue dans le systeme");
 		}
