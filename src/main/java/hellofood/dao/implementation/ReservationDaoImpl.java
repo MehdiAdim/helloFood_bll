@@ -34,10 +34,19 @@ public class ReservationDaoImpl  extends GenericDaoImpl<Reservation, Long>  impl
 		List l = getHibernateTemplate().find(HqlQuery);
 		if (l == null || l.size() == 0)
 			throw new ObjectRetrievalFailureException(Reservation.class, null);
-		System.out.println(" Trouuuuvééé");
 
 		return l;
 		
+	}
+
+	@Override
+	public List<Reservation> getReservationByUser(Long id) {
+		String HqlQuery = "from Reservation  where user = " + id.toString();
+		List<Reservation> l = (List<Reservation>) getHibernateTemplate().find(HqlQuery);
+		if (l == null || l.size() == 0)
+			throw new ObjectRetrievalFailureException(Reservation.class, null);
+
+		return l;
 	}
 
 }

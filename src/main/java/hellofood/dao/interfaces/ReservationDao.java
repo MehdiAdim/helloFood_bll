@@ -14,4 +14,7 @@ public interface ReservationDao extends GenericDao<Reservation, Long> {
 	
 	public List<Reservation> getReservationsByRestaurant(Long idrestaurant);
 	
+	public List<Reservation> getReservationByUser(Long id);
+	
+	
 }

@@ -39,8 +39,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 	private ReservationService reservationService;
 	private LoggerTools loggerTools;
 	
-	
-	
+	//---
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	
@@ -61,6 +60,8 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		Utilisateur lUser = null;
 		try {
 			lUser = userDao.getUserByLogin(userDetails.getUsername());
+			
+			
 			
 		
 			

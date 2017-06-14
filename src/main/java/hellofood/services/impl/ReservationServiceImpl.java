@@ -81,7 +81,6 @@ public class ReservationServiceImpl implements ReservationService {
 
 	public ReservationServiceImpl() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -189,26 +188,28 @@ public class ReservationServiceImpl implements ReservationService {
 			loggerTools.addBox(log, "UPDATE RESERVATIONS");
 			
 		}
-		// UPDATE Tables
+		
+		
+		// UPDATE OCCUPIED TABLES 
+		
 		if(occupiedTables!=null){
 		for(Table t : occupiedTables){
 			
 			t.setIsOccupied(true);
 			tableDao.update(t);
 			
-			loggerTools.addBox(log, "UPDATE TABLES");
+			
 		}
 		}
 		
 		List<Table> alltables= tableDao.getAll();
-		System.out.println(alltables.size());
-		System.out.println(occupiedTables.size());
-		System.out.println(list.size());
+		
+		
+		// Update free tables
 		
 		for(Table t: alltables){
 			int i=0;
 			if(t.getIsOccupied()){
-				System.out.println("OUi occupé");
 				
 				for(Reservation r : list){
 						
@@ -229,7 +230,15 @@ public class ReservationServiceImpl implements ReservationService {
 				}
 				
 			}
+		
+		loggerTools.addBox(log, "UPDATE TABLES");
 		}
+
+
+	@Override
+	public List<Reservation> getReservationsByUser(Long id) {
+		return reservationDao.getReservationByUser(id);
+	}
 		
 		
 

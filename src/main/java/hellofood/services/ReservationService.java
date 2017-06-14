@@ -34,6 +34,8 @@ public interface ReservationService {
 
 	public void deleteReservation(Long pId) throws EntityNotFoundException;
 	
+	public List<Reservation> getReservationsByUser(Long id);
+	
 	
 
 	
