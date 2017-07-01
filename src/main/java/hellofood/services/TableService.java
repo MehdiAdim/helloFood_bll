@@ -26,6 +26,9 @@ public interface TableService {
 	public Table findTableById(Long idTable) throws EntityNotFoundException;
 
 	public void updateTable(Table pTable) ;
+	
+	public List<Table> getAllTablesByRestaurant(Long id);
+	
 
 	
 

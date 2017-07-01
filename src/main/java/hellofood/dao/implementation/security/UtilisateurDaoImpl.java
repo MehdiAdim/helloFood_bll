@@ -16,7 +16,6 @@ public class UtilisateurDaoImpl extends GenericDaoImpl<Utilisateur, Long> implem
 	}
 
 	public Utilisateur getUserByLogin(String pLogin) {
-		System.out.println(pLogin+" getUserByLogin daoImpl");
 
 		List users = getHibernateTemplate().find(
 				"from Utilisateur where  login = ? ",pLogin);
@@ -25,6 +24,19 @@ public class UtilisateurDaoImpl extends GenericDaoImpl<Utilisateur, Long> implem
 
 		if (users == null || users.size() == 0 || users.size() != 1)
 			throw new ObjectRetrievalFailureException(Utilisateur.class, pLogin);
+
+		return (Utilisateur) users.get(0);
+	}
+
+	@Override
+	public Utilisateur getUserById(Long id) {
+		List users = getHibernateTemplate().find(
+				"from Utilisateur where  login = ? ",id.toString());
+	
+		
+
+		if (users == null || users.size() == 0 || users.size() != 1)
+			throw new ObjectRetrievalFailureException(Utilisateur.class,"ID NOT FOUND or DUPLICATE");
 
 		return (Utilisateur) users.get(0);
 	}

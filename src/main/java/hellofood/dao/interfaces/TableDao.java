@@ -17,4 +17,6 @@ public interface TableDao extends GenericDao<Table, Long> {
 	
 	public List<Table> getAll();
 	
+	public List<Table> getAllByRestaurant(Long id);
+	
 }

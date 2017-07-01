@@ -68,6 +68,12 @@ public class TableServiceImpl implements TableService {
 		return null;
 	}
 
+	@Override
+	public List<Table> getAllTablesByRestaurant(Long id) {
+		
+		return tableDao.getAllByRestaurant(id);
+	}
+
 	
 
 

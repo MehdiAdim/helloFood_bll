@@ -218,6 +218,17 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
 		this.reservationService = reservationService;
 	}
 
+	@Override
+	public Utilisateur getUserBy(Long id) {
+		try {
+			return userDao.findById(id);
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
     
 	

@@ -31,5 +31,9 @@ public interface UtilisateurService {
 	
 	public Utilisateur getPrincipal();
 	
+	public Utilisateur getUserBy(Long id);
+	
+	
+	
 
 }
